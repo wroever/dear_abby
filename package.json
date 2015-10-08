@@ -1,0 +1,28 @@
+{
+  "name": "dear_abby",
+  "version": "1.0.0",
+  "description": "10/5/15",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "connect": "^3.4.0",
+    "elasticsearch": "^8.2.0",
+    "express": "^4.13.3",
+    "serve-static": "^1.10.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wroever/dear_abby.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wroever/dear_abby/issues"
+  },
+  "homepage": "https://github.com/wroever/dear_abby"
+}
