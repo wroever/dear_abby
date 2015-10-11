@@ -3,6 +3,9 @@
 
 # da_extract.py
 # script to extract all articles from a given year from the dear abby site
+#
+# usage: python da_extract.py [year]
+# creates article objects for all articles in the given year
 
 import argparse, requests, re
 from bs4 import *
