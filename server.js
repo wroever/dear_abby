@@ -1,20 +1,31 @@
 var express = require('express');
-var serveStatic = require('serve-static');
 var bodyParser = require('body-parser');
 var elasticsearch = require('elasticsearch');
+/* var util = require('util'); //debugging http requests */
 
+var app = express();
+
+// set port to env variable if exists or 5000
+app.set('port', (process.env.PORT || 5000));
+
+// views is directory for all template files
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+
+app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.json());
+
+app.get('/', function(request, response) {
+  response.render('pages/index');
+});
+
+// initialize database connection
 var client = new elasticsearch.Client({
   host: 'http://paas:456497bb9d985d1ce45f33817d2c6236@fili-us-east-1.searchly.com',
   log: 'trace'
 });
 
-/* var util = require('util'); //debugging */
- 
-var app = express();
-
-app.use(serveStatic(__dirname + '/public'));
-app.use(bodyParser.json());
-
+// route mgmt
 app.post('/endpoint', function(req, res) {
 	//util.log(util.inspect(req)) // this line helps you inspect the request so you can see whether the data is in the url (GET) or the req body (POST)
     //util.log('Request recieved: \nmethod: ' + req.method + '\nurl: ' + req.url) // this line logs just the method and url
@@ -60,4 +71,6 @@ app.post('/endpoint', function(req, res) {
 	
 });
 
-app.listen(3000);
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
