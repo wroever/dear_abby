@@ -47,8 +47,6 @@ app.post('/endpoint', function(req, res) {
 		res.send(500, 'No file found');
 	}
 	*/
-	//console.log(req.body.query);
-	var response = {"text":"DEAR OVER IT: Your husband's behavior is passive-aggressive, and I can't help but wonder what he's punishing you for. It's sad that he has such atrocious table manners and such little consideration for your feelings. I 'suggest' you stop trying to serve him a hot meal, let him get his own food from the kitchen and eat it in front of the television when he's hungry, while you eat separately -- preferably out with friends."};
 
 	client.search({
 	  index: 'articles',
@@ -61,12 +59,22 @@ app.post('/endpoint', function(req, res) {
 	    }
 	  }
 	}).then(function (resp) {
+		// create a payload from the search results to send to client
 	    var hits = resp.hits.hits;
-	    res.send(hits[0]._source.question);
+	    var data = { "hits" = [] }
+	    if (hits.length != 0) {
+	    	var n = 3; // number of results to include in payload
+	    	for(i = 0; i < n; i++) {
+	    		if (!!hits[i]) {
+	    			data.hits.push(hits[i]);
+	    		}
+	    	}
+	    }
+	    res.send(data);
 	}, function (err) {
+		console.log('Elasticsearch error:\n');
 	    console.trace(err.message);
 	});
-
 
 	
 });
