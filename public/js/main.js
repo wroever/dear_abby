@@ -10,18 +10,16 @@ $(document).ready(function () {
 			data.query = $("#query").val();
 			console.log(JSON.stringify(data))
 			
-			// $.ajax({
-			// 	type: 'POST',
-			// 	data: JSON.stringify(data),
-		 //        contentType: 'application/json',
-   //              url: '/endpoint',						
-   //              success: function(data) {
-   //                  $("#result-text").html(JSON.stringify(data));
-   //              }
-			// });
-			$("#result-text").load("/endpoint",JSON.stringify(data),function () {
-				
+			$.ajax({
+				type: 'POST',
+				data: JSON.stringify(data),
+		        contentType: 'application/json',
+                url: '/endpoint',						
+                success: function(data) {
+                    $("#result-text").html(JSON.stringify(data));
+                }
 			});
+			//$("#result-text").load("/endpoint",JSON.stringify(data),function (d) {});
 		}
 	});
 });

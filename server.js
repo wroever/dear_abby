@@ -54,14 +54,14 @@ app.post('/endpoint', function(req, res) {
 	  body: {
 	    query: {
 	      match: {
-	        'question': req.body.query
+	        'submission': req.body.query
 	      }
 	    }
 	  }
 	}).then(function (resp) {
 		// create a payload from the search results to send to client
 	    var hits = resp.hits.hits;
-	    var data = { "hits" = [] }
+	    var data = { "hits": [] }
 	    if (hits.length != 0) {
 	    	var n = 3; // number of results to include in payload
 	    	for(i = 0; i < n; i++) {
