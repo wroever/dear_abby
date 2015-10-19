@@ -1,0 +1,13 @@
+<% 
+	var count = 0;
+	hits.forEach(function (e) {
+%>
+	<div class="result-cont<% if(count != 0) { %> more" style="display: none;<% } %>">
+		<p class="result-q"><%= e._source.submission %></h5>
+		<p><%= e._source.response %></p>
+	</div>
+<% 
+		count += 1;
+	});
+%>
+<button type="button" class="btn btn-lg btn-block btn-default show-more">Show more results (<%= hits.length - 1 %>)</button>

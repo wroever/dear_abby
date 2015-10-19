@@ -11,15 +11,26 @@
 
         <div class="container">
             <h1>Dear Abby</h1>
-            <p class="lead">This tool searches the annals of the Dear Abby advice column for advice related to a given issue. Go ahead and give it a try!</p>
+            <p class="lead">Search Abby Van Buren's famous "Dear Abby" advice column for personalized advice.</p>
             <form method="POST" action="">
-                <label for="query">Your query below:</label>
+                <label for="query">Dear Abby:</label>
                 <textarea id="query" class="form-control" rows="4" style="margin-bottom: 5px" placeholder="Dear Abby..."></textarea>
                 <button id="submit-query" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
             </form>
 
-            <h5 style="margin-top: 40px">Result:</h5>
-            <p id="result-text">Result text is displayed here.</p>
+            <section id="result">
+                <p class="lead">Your results will show up here.</p>
+            </section>
+
+            <footer class="footer">
+                <div class="container">
+                    <ul class="text-muted">
+                        <li>EECS 338</li>
+                        <li>&middot;</li>
+                        <li>Sara Abu-Ghnaim, Adam Ashkenazi, Will Roever, Jiwei Xia</li>
+                    </ul>
+                </div>
+            </footer>
         </div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

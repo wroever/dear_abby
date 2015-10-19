@@ -1,3 +1,52 @@
+#submit-query {
+	margin-bottom: 20px;
+}
+
 .error {
 	color: red;
+}
+
+.result-cont.more {
+	display: none;
+}
+
+.result-q {
+	font-weight: bold;
+}
+
+#result {
+	margin-bottom: 30px;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+footer ul {
+	font-size: 0.8em;
+	list-style: none;
+	float: right;
+}
+footer li {
+	float: left;
+	padding: 0px 4px;
+}
+
+.container .text-muted {
+  margin: 22px 0;
 }
