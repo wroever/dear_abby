@@ -35,8 +35,28 @@ app.post('/results', function(req, res) {
 	  type: 'article',
 	  body: {
 	    query: {
-	      match: {
-	        'submission': req.body.query
+	      bool: {
+	      	should: [
+	          { match: {
+	                "submission": req.body.query
+	          }},
+	          { match: {
+	                "response": req.body.query
+	          }}
+	        ]
+		  }
+	    },
+	    rescore: {
+	      window_size: 50,
+	      query: {
+	    	rescore_query: {
+	    	  match_phrase: {
+	    	    submission: {
+	    	  	  query: req.body.query,
+	    	  	  slop: 50
+	    	    }
+	    	  }
+	    	}
 	      }
 	    }
 	  }
