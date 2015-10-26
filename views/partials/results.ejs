@@ -4,7 +4,10 @@
 %>
 	<div class="result-cont<% if(count != 0) { %> more" style="display: none;<% } %>">
 		<p class="result-q"><%= e._source.submission %></h5>
-		<p><%= e._source.response %></p>
+		<div class="result-ans clearfix">
+			<img class="response-avatar" src="/img/avatars/dear_abby.png" />
+			<p><%= e._source.response %></p>
+		</div>
 	</div>
 <% 
 		count += 1;
