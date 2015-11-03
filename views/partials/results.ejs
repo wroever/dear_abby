@@ -3,10 +3,10 @@
 	hits.forEach(function (e) {
 %>
 	<div class="result-cont<% if(count != 0) { %> more" style="display: none;<% } %>">
-		<p class="result-q"><%= e._source.submission %></h5>
+		<p class="result-q"><%= e._source.submission_sh %></h5>
 		<div class="result-ans clearfix">
 			<img class="response-avatar" src="/img/avatars/dear_abby.png" />
-			<p><%= e._source.response %></p>
+			<p><%= e._source.response_sh %></p>
 		</div>
 	</div>
 <% 

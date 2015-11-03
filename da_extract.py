@@ -18,7 +18,7 @@ def main():
 	# parser.add_argument('year', type=int, nargs=1, help='year for which articles should be extracted')
 	# parseResult = parser.parse_args()
 	# year = parseResult.year[0]
-	year = 2013
+	year = 2015
 
 	rootURL = "http://www.uexpress.com"
 
@@ -27,7 +27,7 @@ def main():
 	rxTo = re.compile('^DEAR ABBY:')
 	rxFrom = re.compile('^DEAR')
 
-	insertID = 1544 # 9746 would be first for 2003
+	insertID = 1
 
 	while year > 1990:
 		r  = requests.get(rootURL + "/dearabby/archives/" + str(year))
@@ -97,7 +97,8 @@ def main():
 						if art.isIncomplete():
 							print "Error: failed to insert:" + str(art)
 						else:
-							put_target = "http://paas:456497bb9d985d1ce45f33817d2c6236@fili-us-east-1.searchly.com/articles/article/" + str(insertID)
+							put_target = "http://paas:9976e98d4aa969846497a583e29a0651@fili-us-east-1.searchly.com/articles/article/" + str(insertID)
+							#print art.jsonify()
 							db_put_result = requests.put(put_target, data=art.jsonify())			
 							print db_put_result.status_code
 							print db_put_result.content

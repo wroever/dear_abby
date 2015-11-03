@@ -18,7 +18,7 @@ app.set('view engine', 'ejs');
 
 // initialize database connection
 var client = new elasticsearch.Client({
-	host: 'http://paas:456497bb9d985d1ce45f33817d2c6236@fili-us-east-1.searchly.com',
+	host: 'http://paas:9976e98d4aa969846497a583e29a0651@fili-us-east-1.searchly.com',
 	log: 'trace'
 });
 
@@ -27,7 +27,6 @@ app.get('/', function(request, response) {
 	response.render('pages/index');
 });
 
-// Need to figure out how to handle ajax request w/ route mgr -> potential security issue
 app.post('/results', function(req, res) {
     //util.log('Request recieved: \nmethod: ' + req.method + '\nurl: ' + req.url + '\npath: ' + req.path + '\nbody: ' + req.body) // debugging...
 	client.search({
@@ -38,10 +37,65 @@ app.post('/results', function(req, res) {
 	      bool: {
 	      	should: [
 	          { match: {
-	                "submission": req.body.query
+	                "submission_sw": req.body.query
 	          }},
 	          { match: {
-	                "response": req.body.query
+	                "response_sw": req.body.query
+	          }}
+	        ]
+		  }
+	    },
+	    rescore: {
+	      window_size: 50,
+	      query: {
+	    	rescore_query: {
+		      bool: {
+		      	should: [
+		          { match: {
+		                "submission_sh": req.body.query
+		          }}
+		        ]
+			  }
+	    	}
+	      }
+	    }
+	  }
+	}).then(function (resp) {
+		// create payload from the search results to send to client
+	    var hits = resp.hits.hits;
+	    var data = { "hits": [] }
+    	var n = 3; // number of results to include in payload
+    	for(i = 0; i < n; i++) {
+    		if (!!hits[i]) {
+    			data.hits.push(hits[i]);
+    		}
+    	}
+
+		res.render('partials/results.ejs', data);
+
+	    //res.status(200).send(result_html);
+	}, function (err) {
+	    console.trace(err.message);
+	    res.status(500).end();
+	});
+
+});
+
+/* Search with Shingles
+app.post('/results', function(req, res) {
+    //util.log('Request recieved: \nmethod: ' + req.method + '\nurl: ' + req.url + '\npath: ' + req.path + '\nbody: ' + req.body) // debugging...
+	client.search({
+	  index: 'articles',
+	  type: 'article',
+	  body: {
+	    query: {
+	      bool: {
+	      	should: [
+	          { match: {
+	                "submission_sh": req.body.query
+	          }},
+	          { match: {
+	                "response_sh": req.body.query
 	          }}
 	        ]
 		  }
@@ -51,7 +105,7 @@ app.post('/results', function(req, res) {
 	      query: {
 	    	rescore_query: {
 	    	  match_phrase: {
-	    	    submission: {
+	    	    submission_sw: {
 	    	  	  query: req.body.query,
 	    	  	  slop: 50
 	    	    }
@@ -80,7 +134,7 @@ app.post('/results', function(req, res) {
 	});
 
 });
-
+*/
 /*
 app.post('/endpoint', function(req, res) {
 	//util.log(util.inspect(req)) // this line helps you inspect the request so you can see whether the data is in the url (GET) or the req body (POST)
