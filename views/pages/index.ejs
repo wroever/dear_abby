@@ -16,8 +16,12 @@
                 <label for="query">Dear Abby:</label>
                 <textarea id="query" class="form-control" rows="4" style="margin-bottom: 5px" placeholder="Dear Abby..."></textarea>
                 <button id="submit-query" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                <button id="submit-query-google" class="btn btn-lg btn-primary btn-block" type="submit">Submit via Google</button>
             </form>
 
+            <section id="results-loading">
+                <img src="img/ajax-loader.gif" />
+            </section>
             <section id="result">
                 <p class="lead">Your results will show up here.</p>
             </section>

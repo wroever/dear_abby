@@ -1,5 +1,15 @@
-#submit-query {
+#submit-query-google {
 	margin-bottom: 20px;
+  background-color: #f66;
+  border-color: #c66;
+}
+#submit-query-google:hover {
+  background-color: #c66;
+  border-color: #c66;
+}
+#results-loading {
+  display: none;
+  text-align: center;
 }
 
 .error {

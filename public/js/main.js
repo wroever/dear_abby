@@ -1,14 +1,14 @@
 $(document).ready(function () {
-	function submitQuery() {
+	function submitQuery(type) {
 		var data = { query : $("#query").val() };
-		//var data = { "a" : true };
-		//console.log(JSON.stringify(data))
+
 		$.ajax({
 			type: 'POST',
 			data: JSON.stringify(data),
 	        contentType: 'application/json',
-            url: '/results',						
+            url: type,						
             success: function(html) {
+            	$("#results-loading").hide();
                 $("#result").html(html).promise().done(function () {
                 	$(".show-more").click(function () {
                 		$(".result-cont.more").slideDown();
@@ -17,6 +17,7 @@ $(document).ready(function () {
                 });
             }
 		});
+
 	}
 	$("#query").keypress(function(e) {
 		if(e.which == 13) {
@@ -26,11 +27,22 @@ $(document).ready(function () {
 	});
 	$("#submit-query").bind("click", function (e) {
 		e.preventDefault();
-		$("#result-text").removeClass("error");
+		$("#result").empty();
 		if ($("#query").val().length < 1) {
-			$("#result-text").addClass("error").html("Please enter a query.");
+			$("#result").html('<p class="lead error">Please enter a query.</p>');
 		} else {
-			submitQuery();
+            $("#results-loading").show();
+			submitQuery("results");
+		}
+	});
+	$("#submit-query-google").bind("click", function (e) {
+		e.preventDefault();
+		$("#result").empty();
+		if ($("#query").val().length < 1) {
+			$("#result").html('<p class="lead error">Please enter a query.</p>');
+		} else {
+            $("#results-loading").show();
+			submitQuery("google");
 		}
 	});
 });
