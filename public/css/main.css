@@ -20,11 +20,13 @@
 
 #query {
   margin-left: 80px;
-  background-color: #323232;
+  background-color: #F6E5FF;
+  width: 50%;
 }
 
 #submit-query {
   margin-left: 80px;
+  width: 50%;
 }
 
 .error {
