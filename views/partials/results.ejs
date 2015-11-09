@@ -12,5 +12,14 @@
 <% 
 		count += 1;
 	});
+
+	if (count === 0) {
+%>
+<p class="lead error">No results found. Please try another query.</p>
+<%
+	} else {
 %>
 <button type="button" class="btn btn-lg btn-block btn-default show-more">Show more results (<%= hits.length - 1 %>)</button>
+<%
+	}
+%>

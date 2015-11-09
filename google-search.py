@@ -112,8 +112,9 @@ def main():
 		if is_article(results[i]['url']):
 			excerpt = get_content_str(h,results[i]['content'])
 			article = get_article(results[i]['url'],excerpt)
-			result += '{ "_source": ' + article.jsonify() + '}'
-			if i != len(results)-1:
+			if article:
+				result += '{ "_source": ' + article.jsonify() + '}'
+			if i != len(results)-1 and article: # only append new item if article found 
 				result += ", "
 
 	result += '] }'
