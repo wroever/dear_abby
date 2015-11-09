@@ -2,14 +2,17 @@
 	margin-bottom: 20px;
   background-color: #EA4335;
   border-color: #BB352A;
+  width:50%;
 }
 #submit-query-google:hover {
   background-color: #8C281F;
   border-color: #7E241B;
+  width:50%;
 }
 #results-loading {
   display: none;
   text-align: center;
+  width:50%;
 }
 
 .error {
@@ -42,6 +45,7 @@
   padding-left: 15px;
   border-left: 1px solid #ccc;
   min-height: 70px;
+  width:50%;
 }
 
 /* Sticky footer styles
@@ -49,6 +53,7 @@
 html {
   position: relative;
   min-height: 100%;
+  width:50%;
 }
 body {
   /* Margin bottom by footer height */
@@ -58,10 +63,10 @@ body {
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 50%;
+  width: 100%;
   /* Set the fixed height of the footer here */
   height: 60px;
-  background-color: #DB92FF;
+  background-color: #f5f5f5;
 }
 footer ul {
 	font-size: 0.8em;
