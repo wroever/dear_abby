@@ -18,6 +18,15 @@
   margin-left: 80px;
 }
 
+#query {
+  margin-left: 80px;
+  background-color: #323232;
+}
+
+#submit-query {
+  margin-left: 80px;
+}
+
 .error {
 	color: red;
   width:50%;
