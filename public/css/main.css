@@ -3,26 +3,31 @@
   background-color: #EA4335;
   border-color: #BB352A;
   width:50%;
+  margin-left: 80px;
 }
 #submit-query-google:hover {
   background-color: #8C281F;
   border-color: #7E241B;
   width:50%;
+  margin-left: 80px;
 }
 #results-loading {
   display: none;
   text-align: center;
   width:50%;
+  margin-left: 80px;
 }
 
 .error {
 	color: red;
   width:50%;
+  margin-left: 80px;
 }
 
 .result-cont.more {
 	display: none;
   width:50%;
+  margin-left: 80px;
 }
 
 .result-q {
@@ -52,7 +57,7 @@
   padding-left: 15px;
   border-left: 1px solid #ccc;
   min-height: 70px;
-  background-color: #E9BFFF;
+  background-color: #F6E5FF;
   margin-left: 80px;
 }
 
