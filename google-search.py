@@ -107,15 +107,17 @@ def main():
 	h = HTMLParser.HTMLParser()
 
 	result = '{ "hits": ['
+	result_article_count = 0
 
 	for i in range(len(results)):
 		if is_article(results[i]['url']):
 			excerpt = get_content_str(h,results[i]['content'])
 			article = get_article(results[i]['url'],excerpt)
 			if article:
+				if result_article_count != 0:
+					result += ", "
 				result += '{ "_source": ' + article.jsonify() + '}'
-			if i != len(results)-1 and article: # only append new item if article found 
-				result += ", "
+				result_article_count += 1
 
 	result += '] }'
 	print result
