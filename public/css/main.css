@@ -28,6 +28,7 @@
 .result-q {
 	font-weight: bold;
   width:50%;
+  margin-left: 50px;
 }
 
 #result {
@@ -61,6 +62,7 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  width:50%;
 }
 .footer {
   position: absolute;
