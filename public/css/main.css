@@ -17,18 +17,22 @@
 
 .error {
 	color: red;
+  width:50%;
 }
 
 .result-cont.more {
 	display: none;
+  width:50%;
 }
 
 .result-q {
 	font-weight: bold;
+  width:50%;
 }
 
 #result {
 	margin-bottom: 30px;
+  width:50%;
 }
 
 .response-avatar {
@@ -37,6 +41,7 @@
   margin: 5px 15px 0px 5px;
   border-radius: 50%;
   box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.4);
+  width:50%;
 }
 
 .result-ans p {
@@ -72,12 +77,15 @@ footer ul {
 	font-size: 0.8em;
 	list-style: none;
 	float: right;
+  width:50%;
 }
 footer li {
 	float: left;
 	padding: 0px 4px;
+  width:50%;
 }
 
 .container .text-muted {
   margin: 22px 0;
+  width:50%;
 }
