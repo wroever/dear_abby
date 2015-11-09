@@ -27,13 +27,14 @@
 
 .result-q {
 	font-weight: bold;
-  width:50%;
-  margin-left: 50px;
+  width:75%;
+  margin-left: 80px;
 }
 
 #result {
 	margin-bottom: 30px;
   width:50%;
+  margin-left: 80px;
 }
 
 .response-avatar {
@@ -42,6 +43,7 @@
   margin: 5px 15px 0px 5px;
   border-radius: 50%;
   box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.4);
+  margin-left: 80px;
 }
 
 .result-ans p {
@@ -50,6 +52,8 @@
   padding-left: 15px;
   border-left: 1px solid #ccc;
   min-height: 70px;
+  background-color: #E9BFFF;
+  margin-left: 80px;
 }
 
 /* Sticky footer styles
@@ -57,12 +61,10 @@
 html {
   position: relative;
   min-height: 100%;
-  width:50%;
 }
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
-  width:50%;
 }
 .footer {
   position: absolute;
@@ -77,15 +79,12 @@ footer ul {
 	font-size: 0.8em;
 	list-style: none;
 	float: right;
-  width:50%;
 }
 footer li {
 	float: left;
 	padding: 0px 4px;
-  width:50%;
 }
 
 .container .text-muted {
   margin: 22px 0;
-  width:50%;
 }
