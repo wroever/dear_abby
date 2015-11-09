@@ -1,11 +1,11 @@
 #submit-query-google {
 	margin-bottom: 20px;
-  background-color: #f66;
-  border-color: #c66;
+  background-color: #EA4335;
+  border-color: #BB352A;
 }
 #submit-query-google:hover {
-  background-color: #c66;
-  border-color: #c66;
+  background-color: #8C281F;
+  border-color: #7E241B;
 }
 #results-loading {
   display: none;
@@ -58,10 +58,10 @@ body {
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 100%;
+  width: 50%;
   /* Set the fixed height of the footer here */
   height: 60px;
-  background-color: #f5f5f5;
+  background-color: #DB92FF;
 }
 footer ul {
 	font-size: 0.8em;
