@@ -72,6 +72,32 @@
   margin-left: 80px;
 }
 
+.colorChange{
+    background-color: lightskyblue;
+    animation-name: cyl;
+    animation-duration: 5s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    -webkit-animation-name: cyl;
+    -webkit-animation-duration: 5s;
+    -webkit-animation-direction: alternate;
+    -webkit-animation-iteration-count: infinite;
+}
+
+@keyframes cyl{
+    0%{background-color: #66DBE8;}
+    25%{background-color: #59D5E3;}
+    50%{background-color: #52D0DE;}
+    75%{background-color: #48CAD9;}
+}
+@-webkit-keyframes cyl{
+    0%{background-color: #66DBE8;}
+    25%{background-color: #59D5E3;}
+    50%{background-color: #52D0DE;}
+    75%{background-color: #48CAD9;}
+}
+
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
