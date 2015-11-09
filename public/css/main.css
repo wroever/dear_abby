@@ -1,4 +1,13 @@
-#submit-query-google {
+#query {
+  margin-left: 80px;
+  background-color: #FFFFFF;
+  width: 50%;
+}
+
+#submit-query {
+  margin-left: 80px;
+  width: 50%;
+}#submit-query-google {
 	margin-bottom: 20px;
   background-color: #EA4335;
   border-color: #BB352A;
@@ -16,17 +25,6 @@
   text-align: center;
   width:50%;
   margin-left: 80px;
-}
-
-#query {
-  margin-left: 80px;
-  background-color: #FFFFFF;
-  width: 50%;
-}
-
-#submit-query {
-  margin-left: 80px;
-  width: 50%;
 }
 
 .error {
