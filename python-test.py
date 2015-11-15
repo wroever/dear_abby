@@ -4,7 +4,11 @@
 # python-test.py
 # used to test heroku compatibility with python child process
 
+from subprocess import call
+
 def main():
-	print "Test successful!"
+	call(["pip", "install", "beautifulsoup4"])
+	call(["pip", "install", "requests"])
+	call(["pip", "install", "simplejson"])
 
 main()
