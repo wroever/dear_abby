@@ -86,7 +86,7 @@ def main():
 					'q': q,
 					'as_q': q,
 					'as_qdr': 'all',
-					'as_sitesearch': 'uexpress.com',
+					'as_sitesearch': 'uexpress.com/dearabby',
 					'as_occt': 'any',
 					'v': '1.0'}
 	# print urllib.urlencode(query_params)
@@ -107,14 +107,23 @@ def main():
 	h = HTMLParser.HTMLParser()
 
 	result = '{ "hits": ['
+	result_article_count = 0
 
 	for i in range(len(results)):
-		if is_article(results[i]['url']):
-			excerpt = get_content_str(h,results[i]['content'])
-			article = get_article(results[i]['url'],excerpt)
-			result += '{ "_source": ' + article.jsonify() + '}'
-			if i != len(results)-1:
+		#if is_article(results[i]['url']): indent below loop content when this line uncommented
+		excerpt = get_content_str(h,results[i]['content'])
+		article = get_article(results[i]['url'],excerpt)
+		if article:
+			if result_article_count != 0:
 				result += ", "
+			result += '{ "_source": ' + article.jsonify() + '}'
+			result_article_count += 1
+
+	# debugging...
+	"""
+	if result_article_count == 0:
+		result += '"'+q+'"'
+	"""
 
 	result += '] }'
 	print result
