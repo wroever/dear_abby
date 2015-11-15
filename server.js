@@ -30,10 +30,12 @@ app.get('/', function(request, response) {
 // Google search queries
 app.post('/google', function(req, res) {
 	console.log('\nQuery: ' + req.body.query);
-	//py = childProcess.spawnSync('python',['google-search.py','--query',req.body.query.replace(/'/g,"'\\''")]);
-	py = childProcess.spawnSync('python',['google-search.py','--query',req.body.query]);
-	console.log('process exited with status %d', py.status);
-	var data = py.stdout.toString();
+	py1 = childProcess.spawnSync('python',['python-test.py']);
+	var data = py1.stdout.toString();
+	console.log(data);
+	py2 = childProcess.spawnSync('python',['google-search.py','--query',req.body.query]);
+	console.log('process exited with status %d', py2.status);
+	var data = py2.stdout.toString();
 	console.log(data);
 	res.render('partials/results.ejs', JSON.parse(data));
 
