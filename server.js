@@ -41,32 +41,15 @@ app.post('/google', function(req, res) {
 	py2 = childProcess.spawn('python',['google-search.py','--query',req.body.query]);
 	var output2 = '';
 	py2.stdout.on('data', function(data) {
-		console.log("|" + data.toString() + " | ");
 		output2 += data;
 	});
 	py2.stdout.on('close', function (data) {
+		console.log(output2);
 		res.render('partials/results.ejs', JSON.parse(output2));
 	});
 	py2.on('close', function (code) {
 		console.log('process exited with status %d', code);
 	});
-
-	/*
-	var data = "";
-	py.stdout.on('data', function (output) {
-	  // encode stdout stream as json and append each result to hits
-	  data += output;
-	});
-
-	py.stderr.on('data', function (data) {
-	  console.log('stderr: ' + data);
-	});
-
-	py.on('close', function (code) {
-	  console.log('child process exited with code ' + code);
-	  res.render('partials/results.ejs', JSON.parse(data));
-	});
-	*/
 
 });
 

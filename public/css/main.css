@@ -35,14 +35,10 @@
 
 .result-cont.more {
 	display: none;
-/*  width:50%;
-  margin-left: 80px;
-  */
 }
 
 .result-q {
 	font-weight: bold;
-  width:75%;
   margin-left: 80px;
 }
 
