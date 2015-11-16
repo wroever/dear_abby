@@ -38,6 +38,7 @@ app.post('/google', function(req, res) {
 	py1.stdout.on('close', function (data) {
 		console.log(output);
 	});
+	/*
 	py2 = childProcess.spawn('python',['google-search.py','--query',req.body.query]);
 	var output2 = '';
 	py2.stdout.on('data', function(data) {
@@ -50,7 +51,7 @@ app.post('/google', function(req, res) {
 	py2.on('close', function (code) {
 		console.log('process exited with status %d', code);
 	});
-
+	*/
 });
 
 // ElasticSearch database queries
