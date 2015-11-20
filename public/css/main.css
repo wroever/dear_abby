@@ -1,70 +1,72 @@
-#query {
-  margin-left: 80px;
-  background-color: #FFFFFF;
-  width: 50%;
+#banner {
+  text-align: center;
+}
+
+h1 {
+  font-family: 'Dancing Script', cursive;
+  display: inline-block;
+  font-weight: 700;
+  font-size: 3.8em;
+  margin: 30px 0px;
+}
+
+p {
+  margin: 0 0 5px;
 }
 
 #submit-query {
-  margin-left: 80px;
-  width: 50%;
-}#submit-query-google {
+}
+#submit-query-google {
 	margin-bottom: 20px;
   background-color: #EA4335;
   border-color: #BB352A;
-  width:50%;
-  margin-left: 80px;
 }
 #submit-query-google:hover {
   background-color: #8C281F;
   border-color: #7E241B;
-  width:50%;
-  margin-left: 80px;
 }
-#results-loading {
-  display: none;
-  text-align: center;
-  width:50%;
-  margin-left: 80px;
+.results-loading {
+  margin-left: 5px;
+  height: 14px;
 }
 
 .error {
 	color: red;
-  width:50%;
-  margin-left: 80px;
 }
-
-.result-cont.more {
-	display: none;
+.glyphicon {
+  margin-right: 5px; 
 }
-
-.result-q {
-	font-weight: bold;
-  margin-left: 80px;
+.label {
+  margin-left: 5px;
+}
+.label-info {
+  background-color: #f66;
+}
+.source-link {
+  color: #999;
+  font-style: italic;
 }
 
 #result {
 	margin-bottom: 30px;
-  width:50%;
-  margin-left: 80px;
 }
 
+.result-ans {
+  margin: 10px 0px;
+}
 .response-avatar {
   width: 60px;
   float: left;
   margin: 5px 15px 0px 5px;
   border-radius: 50%;
   box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.4);
-  margin-left: 80px;
 }
-
-.result-ans p {
+.response-text {
   overflow: hidden;
   zoom: 1;
-  padding-left: 15px;
+  padding-left: 15px; 
   border-left: 1px solid #ccc;
   min-height: 70px;
-  background-color: #FFFFFF;
-  margin-left: 80px;
 }
 
 /* Sticky footer styles
@@ -90,12 +92,9 @@ footer ul {
 	font-size: 0.8em;
 	list-style: none;
 	float: right;
+  margin: 22px 0;
 }
 footer li {
 	float: left;
 	padding: 0px 4px;
-}
-
-.container .text-muted {
-  margin: 22px 0;
 }

@@ -1,25 +1,39 @@
 <% 
-	var count = 0;
-	hits.forEach(function (e) {
+	if (!hits.length) {
 %>
-	<div class="result-cont<% if(count != 0) { %> more" style="display: none;<% } %>">
-		<p class="result-q"><%= e._source.submission_sh %></h5>
-		<div class="result-ans clearfix">
-			<img class="response-avatar" src="/img/avatars/dear_abby.png" />
-			<p><%= e._source.response_sh %></p>
-		</div>
+	<div class="list-group-item">
+		<p class="error">No results found. Please try another query.</p>
 	</div>
-<% 
-		count += 1;
-	});
-
-	if (count === 0) {
-%>
-<p class="lead error">No results found. Please try another query.</p>
 <%
 	} else {
+		var q;
+		var r;
+		hits.forEach(function (e) {
+			q = e._source.submission.split(/\r?\n/);
+			r = e._source.response.split(/\r?\n/);
 %>
-<button type="button" class="btn btn-lg btn-block btn-default show-more">Show more results (<%= hits.length - 1 %>)</button>
+	<div class="list-group-item">
 <%
+			q.forEach(function (p) {
+%>
+		<p style="font-weight: bold;"><%= p %></p>
+<%
+			});
+%>
+		<div class="result-ans clearfix">
+			<img class="response-avatar" src="/img/avatars/<%= e.img_type %>.png" />
+			<div class="response-text">
+<%
+			r.forEach(function (q) {
+%>
+				<p><%= q %></p>
+<%
+			});
+%>
+			</div>
+		</div>
+	</div>
+<%
+ 		});
 	}
 %>

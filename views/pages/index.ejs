@@ -5,42 +5,73 @@
         <% include ../partials/header.ejs %>
     </head>
     <body>
-        <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+        <div id="container-wrap">
+            <!--[if lt IE 8]>
+                <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+            <![endif]-->
 
-        <div class="container">
-            <h1 style="margin-right: 50px">Dear Abby</h1>
-            <p style="margin-right: 50px" class="lead">Search Abby Van Buren's famous "Dear Abby" advice column for personalized advice.</p>
-            <form method="POST" action="">
-                <label style="margin-right: 50px" for="query">Dear Abby:</label>
-                <textarea id="query" class="form-control" rows="4" style="margin-bottom: 5px" placeholder="Dear Abby..."></textarea>
-                <button id="submit-query" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-                <button id="submit-query-google" class="btn btn-lg btn-primary btn-block" type="submit">Submit via Google</button>
-            </form>
-
-            <section id="results-loading">
-                <img src="img/ajax-loader.gif" />
-            </section>
-            <section id="result">
-                <p class="lead">Your results will show up here.</p>
-            </section>
-
-            <footer class="footer">
-                <div class="container">
-                    <ul class="text-muted">
-                        <li>EECS 338</li>
-                        <li>&middot;</li>
-                        <li>Sara Abu-Ghnaim, Adam Ashkenazi, Will Roever, Jiwei Xia</li>
-                    </ul>
+            <div class="container">
+                <div class="row">
+                    <div class="span12">
+                        <div id="banner" class="clearfix">
+                            <h1 class="hdr-element">Dear Abby</h1>
+                        </div>
+                    </div>
+                    <p class="lead">Search famous advice columns for personalized advice.</p>
                 </div>
-            </footer>
-        </div>
+                <div class="row">
+                    <div class="span12">
+                        <form method="POST" action="">
+                            <label for="query">Dear Abby:</label>
+                            <textarea id="query" class="form-control" rows="4" style="margin-bottom: 5px" placeholder="Dear Abby..."></textarea>
+                            <button id="submit-query" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                            <button id="submit-query-google" class="btn btn-lg btn-primary btn-block" type="submit">Submit via Google</button>
+                        </form>
 
+                        <section id="result">
+                            <p class="lead">Your results:</p>
+                            <div id="results-menu">
+                                <div class="panel list-group">
+                                    <a href="#" class="list-group-item" data-toggle="collapse" data-target="#da" data-parent="#results-menu"><span class="glyphicon glyphicon-chevron-right"></span>Dear Abby<span class="label label-info">0</span><img src="/img/ajax-loader.gif" class="results-loading hide" /><span class="source-link pull-right">www.uexpress.com/dearabby</span></a>
+                                    <div id="da" class="sublinks collapse">
+                                        <div class="list-group-item">
+                                            <p>With a worldwide readership of more than 110 million, Dear Abby has a devoted following who wouldn't dream of starting each day without her. The most widely syndicated columnist in the world and a true household name, Dear Abby is well-known for sound, compassionate advice, delivered with the straightforward style of a good friend. Share a laugh, shed a tear or learn something new every day with Dear Abby.</p>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="list-group-item" data-toggle="collapse" data-target="#ss" data-parent="#results-menu"><span class="glyphicon glyphicon-chevron-right"></span>Sense &amp; Sensitivity<span class="label label-info">0</span><img src="/img/ajax-loader.gif" class="results-loading hide" /><span class="source-link pull-right">www.uexpress.com/sense-and-sensistivity</span></a>
+                                    <div id="ss" class="sublinks collapse">
+                                        <div class="list-group-item">
+                                            <p>Sense &amp; Sensitivity offers sound, supportive advice from best-selling author and entrepreneur Harriette Cole. Boasting modern advice for contemporary problems ranging from etiquette to relationships to depression, Cole's empathetic, sincere and well-researched answers provide information to those seeking answers.</p>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="list-group-item" data-toggle="collapse" data-target="#sl" data-parent="#results-menu"><span class="glyphicon glyphicon-chevron-right"></span>Savage Love<span class="label label-info">0</span><img src="/img/ajax-loader.gif" class="results-loading hide" /><span class="source-link pull-right">www.thestranger.com/blogs/slog/</span></span></a>
+                                    <div id="sl" class="sublinks collapse">
+                                        <div class="list-group-item">
+                                            <p>In addition to being a nationally syndicated sex advice columnist and author of books, Savage can also lay claim to being the only person at The Stranger to have actually converted his sexuality into a profession. Of the 100-120 days he works in a given calendar year, Savage dedicates fully 90 of them to psychologically abusing his staff by rewriting articles without telling them, assigning huge pieces at the last minute, and questioning their dedication to the paper, their intellect, and indeed, their sexuality. He has a boyfriend and a child. He is also wealthy beyond the dreams of avarice and cheats at racketball. Good luck getting him on the phone, and don’t ever ask where he’s going or where he’s been.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <footer class="footer">
+                    <div class="container">
+                        <ul class="text-muted">
+                            <li>EECS 338</li>
+                            <li>&middot;</li>
+                            <li>Sara Abu-Ghnaim, Adam Ashkenazi, Will Roever, Jiwei Xia</li>
+                        </ul>
+                    </div>
+                </footer>
+            </div>
+        </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
+        <script src="/js/vendor/collapse.js"></script>
+        <script src="/js/vendor/transition.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>

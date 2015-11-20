@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-# google-search.py
+# google-search-abby.py
 # pulls Dear Abby search results, using google advanced search API
 
 import argparse, re, requests, urllib, urllib2, simplejson, HTMLParser
@@ -11,38 +11,29 @@ from article import *
 # URL -> Boolean
 # determines whether the given URL corresponds to a Dear Abby article page
 def is_article(url):
-	rXAbby = re.compile(r'uexpress.com/dearabby/')
-	rXHarriette = re.compile(r'uexpress.com/sense-and-sensitivity/')
-	rXTopics = re.compile(r'/topics/')
-
-	if not re.search(rXTopics,url):
-		if re.search(rXAbby,url):
-			return 1
-		elif re.search(rXHarriette,url):
-			return 2
-		else:
-			return -1
-	return -1
+	rX1 = re.compile(r'uexpress.com/dearabby/')
+	rX2 = re.compile(r'/topics/')
+	if re.search(rX1,url) and not re.search(rX2,url):
+			return True
+	return False
 
 # Parser String -> String
 # cleans up google search api result so that it can be used in identifying the full article
 def get_content_str(parser,content_str):
 	rX_tags = re.compile(r'<[^>]+>')
 	rX_unicode = re.compile(r'[^\x00-\x7F\n]+')
-	rX_toMatch = re.compile(r'[0-9]+ (\.\.\.)?([^\.]+)')
+	#rX_abby = re.compile('DEAR ABBY:')
+	rX_match = re.compile(r'[0-9]+(\.)? (\.\.\.)?([^\.]+)')
 	content_str = re.sub(rX_tags,'',parser.unescape(content_str.replace('\n','')))
 	content_str = re.sub(rX_unicode,'',content_str)
-	match_result = re.search(rX_toMatch,content_str)
-	return match_result.group(2).strip()
+	#content_str = re.sub(rX_abby,'',content_str)
+	match_result = re.search(rX_match,content_str)
+	return match_result.group(3).strip()
 
 # URL String -> Article
 # pulls article containing the given text from the URL
-def get_article(url,txt,art_type):
-	if art_type == 2:
-		rX_to = re.compile('^DEAR HARRIETTE:')
-	else:
-		rX_to = re.compile('^DEAR ABBY:')
-
+def get_article(url,txt):
+	rX_to = re.compile('^DEAR ABBY:')
 	rX_from = re.compile('^DEAR')
 	rX_excerpt = re.compile(txt)
 
@@ -74,11 +65,11 @@ def get_article(url,txt,art_type):
 				elif article_part == 2:
 					response.append(txt)
 				else:
-					print "Error: no text matched: " + link.get("href")
+					print "Error: no text matched."
 
 			# if a complete article is identified, create article opject and insert it
 			if article_part == 2:
-				art = article(None,'\n'.join(question),'\n'.join(response),art_type)
+				art = article(None,'\n'.join(question),'\n'.join(response))
 				art.tags = [category.get_text().strip() for category in a.find_all("a", class_="read-more-link")]
 				return art
 
@@ -94,10 +85,10 @@ def main():
 
 	q = args.query.encode('utf8')
 	query_params = {'userip': 'USERS-IP-ADDRESS',
-					'q': q.strip().replace(' ',' OR '),
-					'as_oq': q,
+					'q': q,
+					'as_q': q,
 					'as_qdr': 'all',
-					'as_sitesearch': 'uexpress.com/sense-and-sensitivity',
+					'as_sitesearch': 'uexpress.com/dearabby',
 					'as_occt': 'any',
 					'v': '1.0'}
 	# print urllib.urlencode(query_params)
@@ -106,31 +97,49 @@ def main():
 	# user's IP address. Doing so will help distinguish this legitimate
 	# server-side traffic from traffic which doesn't come from an end-user.
 	url = ('https://ajax.googleapis.com/ajax/services/search/web?'+urllib.urlencode(query_params))
-	print url
 
 	request = urllib2.Request(url, None)
 	response = urllib2.urlopen(request)
 
 	# Process the JSON string
 	results = simplejson.load(response) # raw search result JSON obj
-	# print simplejson.dumps(results, sort_keys=True, indent=(4 * ' '))
+	#print simplejson.dumps(results, sort_keys=True, indent=(4 * ' '))
 	
 	results = results['responseData']['results']
+	if not results:
+		query_params = {'userip': 'USERS-IP-ADDRESS',
+						'q': q.strip().replace(' ',' OR '),
+						'as_oq': q,
+						'as_qdr': 'all',
+						'as_sitesearch': 'uexpress.com/dearabby',
+						'as_occt': 'any',
+						'v': '1.0'}
+		# print urllib.urlencode(query_params)
+		url = ('https://ajax.googleapis.com/ajax/services/search/web?'+urllib.urlencode(query_params))
+
+		request = urllib2.Request(url, None)
+		response = urllib2.urlopen(request)
+
+		# Process the JSON string
+		results = simplejson.load(response) # raw search result JSON obj
+		#print simplejson.dumps(results, sort_keys=True, indent=(4 * ' '))
+		
+		results = results['responseData']['results']
+
 	h = HTMLParser.HTMLParser()
 
 	result = '{ "hits": ['
 	result_article_count = 0
 
 	for i in range(len(results)):
-		typ = is_article(results[i]['url'])
-		if typ:
-			excerpt = get_content_str(h,results[i]['content'])
-			article = get_article(results[i]['url'],excerpt,typ)
-			if article:
-				if result_article_count != 0:
-					result += ", "
-				result += '{ "_source": ' + article.jsonify() + '}'
-				result_article_count += 1
+		#if is_article(results[i]['url']): indent below loop content when this line uncommented
+		excerpt = get_content_str(h,results[i]['content'])
+		article = get_article(results[i]['url'],excerpt)
+		if article:
+			if result_article_count != 0:
+				result += ", "
+			result += '{ "_source": ' + article.jsonify() + '}'
+			result_article_count += 1
 
 	# debugging...
 	"""

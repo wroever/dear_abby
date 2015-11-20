@@ -1,0 +1,25 @@
+<% 
+	var count = 0;
+	hits.forEach(function (e) {
+%>
+	<div class="result-cont<% if(count != 0) { %> more" style="display: none;<% } %>">
+		<p class="result-q"><%= e._source.submission_sh %></h5>
+		<div class="result-ans clearfix">
+			<img class="response-avatar" src="/img/avatars/dear_abby.png" />
+			<p><%= e._source.response_sh %></p>
+		</div>
+	</div>
+<% 
+		count += 1;
+	});
+
+	if (count === 0) {
+%>
+<p class="lead error">No results found. Please try another query.</p>
+<%
+	} else {
+%>
+<button type="button" class="btn btn-lg btn-block btn-default show-more">Show more results (<%= hits.length - 1 %>)</button>
+<%
+	}
+%>

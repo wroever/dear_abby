@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-# google-search.py
-# pulls Dear Abby search results, using google advanced search API
+# gs-ds.py : search Dan Savage's Savage Love column
 
 import argparse, re, requests, urllib, urllib2, simplejson, HTMLParser
 from bs4 import *
@@ -11,18 +10,7 @@ from article import *
 # URL -> Boolean
 # determines whether the given URL corresponds to a Dear Abby article page
 def is_article(url):
-	rXAbby = re.compile(r'uexpress.com/dearabby/')
-	rXHarriette = re.compile(r'uexpress.com/sense-and-sensitivity/')
-	rXTopics = re.compile(r'/topics/')
-
-	if not re.search(rXTopics,url):
-		if re.search(rXAbby,url):
-			return 1
-		elif re.search(rXHarriette,url):
-			return 2
-		else:
-			return -1
-	return -1
+	return True
 
 # Parser String -> String
 # cleans up google search api result so that it can be used in identifying the full article
@@ -37,50 +25,36 @@ def get_content_str(parser,content_str):
 
 # URL String -> Article
 # pulls article containing the given text from the URL
-def get_article(url,txt,art_type):
-	if art_type == 2:
-		rX_to = re.compile('^DEAR HARRIETTE:')
-	else:
-		rX_to = re.compile('^DEAR ABBY:')
-
-	rX_from = re.compile('^DEAR')
-	rX_excerpt = re.compile(txt)
-
+def get_article(url):
 	# get/parse page contents
 	r = requests.get(url)
 	r_text = r.text
 	soup = BeautifulSoup(r_text, "html.parser")
 
 	# get articles
-	page_articles = soup.find_all("article", class_="item-section")
+	page_articles = soup.find_all("div", class_="article-text category-slog")
 
 	# search articles for excerpt
 	for a in page_articles:
-		if re.search(rX_excerpt, str(a)):
-			# get article content
-			paragraphs = a.find_all("p")
-			question = []
-			response = []
-			article_part = 0 # 1: question; 2: response
-			for p in paragraphs:
-				txt = p.get_text().strip()
-				if re.search(rX_from,txt):
-					if re.search(rX_to,txt):
-						article_part = 1
-					else:
-						article_part = 2
-				if article_part == 1:
-					question.append(txt)
-				elif article_part == 2:
-					response.append(txt)
-				else:
-					print "Error: no text matched: " + link.get("href")
+		# get article content
+		ps_and_as = a.find_all(["p","a"])
+		question = []
+		response = []
+		article_part = 1 # 1: question; 2: response
+		for pa in ps_and_as:
+			if pa.has_attr('name') and pa['name'] == "more":
+				article_part = 2
+			else:
+				if pa.name == "p":
+					if article_part == 1:
+						question.append(pa.get_text())
+					elif article_part == 2:
+						response.append(pa.get_text())
 
-			# if a complete article is identified, create article opject and insert it
-			if article_part == 2:
-				art = article(None,'\n'.join(question),'\n'.join(response),art_type)
-				art.tags = [category.get_text().strip() for category in a.find_all("a", class_="read-more-link")]
-				return art
+		# if a complete article is identified, create article opject and insert it
+		if article_part == 2:
+			art = article(None,'\n'.join(question),'\n'.join(response))
+			return art
 
 	return False
 
@@ -94,10 +68,10 @@ def main():
 
 	q = args.query.encode('utf8')
 	query_params = {'userip': 'USERS-IP-ADDRESS',
-					'q': q.strip().replace(' ',' OR '),
-					'as_oq': q,
+					'q': q,
+					'as_q': q,
 					'as_qdr': 'all',
-					'as_sitesearch': 'uexpress.com/sense-and-sensitivity',
+					'as_sitesearch': 'thestranger.com/blogs/slog/',
 					'as_occt': 'any',
 					'v': '1.0'}
 	# print urllib.urlencode(query_params)
@@ -106,7 +80,6 @@ def main():
 	# user's IP address. Doing so will help distinguish this legitimate
 	# server-side traffic from traffic which doesn't come from an end-user.
 	url = ('https://ajax.googleapis.com/ajax/services/search/web?'+urllib.urlencode(query_params))
-	print url
 
 	request = urllib2.Request(url, None)
 	response = urllib2.urlopen(request)
@@ -122,15 +95,13 @@ def main():
 	result_article_count = 0
 
 	for i in range(len(results)):
-		typ = is_article(results[i]['url'])
-		if typ:
-			excerpt = get_content_str(h,results[i]['content'])
-			article = get_article(results[i]['url'],excerpt,typ)
-			if article:
-				if result_article_count != 0:
-					result += ", "
-				result += '{ "_source": ' + article.jsonify() + '}'
-				result_article_count += 1
+		#if is_article(results[i]['url']): indent below loop content when this line uncommented
+		article = get_article(results[i]['url'])
+		if article:
+			if result_article_count != 0:
+				result += ", "
+			result += '{ "_source": ' + article.jsonify() + ', "img_type": "dan_savage"}'
+			result_article_count += 1
 
 	# debugging...
 	"""

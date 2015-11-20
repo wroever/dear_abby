@@ -2,11 +2,12 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var elasticsearch = require('elasticsearch');
 var childProcess = require('child_process');
+var ejs = require('ejs');
 
 var app = express();
 //var router = express.Router(); //express 4.0 adds router functionality
 
-// set port to env variable if exists or 5000
+// set port to env $PORT if exists or 5000
 app.set('port', (process.env.PORT || 5000));
 
 app.use(express.static(__dirname + '/public'));
@@ -30,6 +31,7 @@ app.get('/', function(request, response) {
 // Google search queries
 app.post('/google', function(req, res) {
 	console.log('\nQuery: ' + req.body.query);
+	/*
 	var output = '';
 	py1 = childProcess.spawn('python',['python-test.py']);
 	py1.stdout.on('data', function(data) {
@@ -38,20 +40,35 @@ app.post('/google', function(req, res) {
 	py1.stdout.on('close', function (data) {
 		console.log(output);
 	});
-	/*
-	py2 = childProcess.spawn('python',['google-search.py','--query',req.body.query]);
-	var output2 = '';
-	py2.stdout.on('data', function(data) {
-		output2 += data;
-	});
-	py2.stdout.on('close', function (data) {
-		console.log(output2);
-		res.render('partials/results.ejs', JSON.parse(output2));
-	});
-	py2.on('close', function (code) {
-		console.log('process exited with status %d', code);
-	});
 	*/
+	var t = req.body.qtype;
+	var script;
+	if (t == 0) {
+		script = 'gs-da.py';
+	} else if (t == 1) {
+		script = 'gs-ss.py';
+	} else {
+		script = 'gs-ds.py';
+	}
+	py = childProcess.spawn('python',[script,'--query',req.body.query]);
+	var out = '';
+	py.stderr.on('data', function(d) {
+		console.log(d);
+	});
+	py.stdout.on('data', function(d) {
+		out += d;
+	});
+	py.stdout.on('close', function(d) {
+		console.log(out);
+	});
+	py.on('close', function (code) {
+		console.log('process exited with status %d', code);
+		var data = JSON.parse(out);
+	    app.render('partials/results.ejs', data, function (err, mkup) {
+	    	res.setHeader('Content-Type', 'application/json');
+	    	res.send(JSON.stringify({ html: mkup, hits: data.hits.length }));
+	    });
+	});
 });
 
 // ElasticSearch database queries

@@ -33,19 +33,20 @@ class article(object):
 
 	def jsonify(self):
 		q = json_encode(self.question)
-		r = json_encode(self.response) 
-		result = '{ "title": "'
-		if self.title:
-			result += json_encode(self.title)
-		result += '", "submission_sh": "' + q + '", '
-		result += '"submission_sw": "' + q + '", '
-		result += '"response_sh": "' + r + '", '
-		result += '"response_sw": "' + r + '", '
-		if self.tags:
-			result += '"tags": ["' + '", "'.join([json_encode(item) for item in self.tags]) + '"]'
-		else:
-			result += '"tags": []'
-		result += " }"
+		r = json_encode(self.response)
+		result = '{ "submission": "' + q + '", '
+		result += '"response": "' + r + '" }'
+		#result = '{ "title": "'
+		#if self.title:
+		#	result += json_encode(self.title)
+		#result += '", "submission_sh": "' + q + '", '
+		#result += '"submission_sw": "' + q + '", '
+		#result += '"response_sh": "' + r + '", '
+		#result += '"response_sw": "' + r + '", '
+		#if self.tags:
+		#	result += '"tags": ["' + '", "'.join([json_encode(item) for item in self.tags]) + '"]'
+		#else:
+		#	result += '"tags": []'
 		return result
 
 def json_encode(s):
