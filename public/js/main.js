@@ -45,18 +45,19 @@ $(document).ready(function () {
 	        contentType: 'application/json',
             url: '/google'
 		}).done(function(d) {
-			$target.html(d.html);
-        }).fail(function () {
-        	alert("Something went wrong. Please refresh the page and try again.");
-        }).always(function (d) {
-        	var n = typeof d == 'object' ? d.hits : 0;
-			$currentQ.find('.label-info').html(n).removeClass('hide');
-			$currentQ.find('.results-loading').addClass('hide');
-        	if (++qType < 3) {
+			if (++qType < 3) {
         		submitSearchQuery(qType);
         	} else {
         		querying = false;
         	}
+			$target.html(d.html);
+        }).fail(function () {
+        	querying = false;
+        	alert("Something went wrong. Please refresh the page and try again.");
+        }).always(function (d) {
+        	var n = typeof d == 'object' && d.hits ? d.hits : 0;
+			$currentQ.find('.label-info').html(n).removeClass('hide');
+			$currentQ.find('.results-loading').addClass('hide');
         });
 	}
 	function submitQuery(type) {
