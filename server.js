@@ -1,3 +1,5 @@
+// server.js
+// node.js web server
 var express = require('express');
 var bodyParser = require('body-parser');
 var elasticsearch = require('elasticsearch');
@@ -28,9 +30,24 @@ app.get('/', function(request, response) {
 	response.render('pages/index');
 });
 
+// var stopwords = ['I','a','about','an','are','as','at','be','by','com','for','from','how','in','is','it','of','on','or','that','the','this','to','was','what','when','where','who','will','with','the','www'];
+
 // Google search queries
 app.post('/google', function(req, res) {
-	console.log('\nQuery: ' + req.body.query);
+	var query = req.body.query;
+	console.log('\nQuery: ' + query);
+	// preprocess query
+	/*
+	q = tokenizer.tokenize(req.body.query);
+	var query = '';
+	for (var i = 0; i < q.length; i++) {
+		if (stopwords.indexOf(q[i]) < 0) {
+			query = query.concat(' ' + q[i]);
+		}
+	}
+	console.log(query);
+	*/
+
 	/*
 	var output = '';
 	py1 = childProcess.spawn('python',['python-test.py']);
@@ -50,7 +67,7 @@ app.post('/google', function(req, res) {
 	} else {
 		script = 'gs-ds.py';
 	}
-	py = childProcess.spawn('python',[script,'--query',req.body.query]);
+	py = childProcess.spawn('python',[script,'--query',query]);
 	var out = '';
 	py.stderr.on('data', function(d) {
 		console.log(d);

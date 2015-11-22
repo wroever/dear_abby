@@ -34,6 +34,7 @@ def get_content_str(parser,content_str):
 # URL String -> Article
 # pulls article containing the given text from the URL
 def get_article(url,txt):
+	txt = txt.replace('(','\(').replace(')','\)').replace('[','\[').replace(']','\]')
 	rX_to = re.compile('^DEAR ABBY:')
 	rX_from = re.compile('^DEAR')
 	rX_excerpt = re.compile(txt)
