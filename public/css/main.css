@@ -6,8 +6,14 @@ h1 {
   font-family: 'Dancing Script', cursive;
   display: inline-block;
   font-weight: 700;
-  font-size: 3.8em;
-  margin: 30px 0px;
+  font-size: 60px;
+  margin: 30px 0;
+}
+#logo-img {
+  display: inline;
+  vertical-align: top;
+  height: 60px;
+  margin-left: 7px;
 }
 
 p {

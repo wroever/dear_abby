@@ -35,7 +35,7 @@ app.get('/', function(request, response) {
 // Google search queries
 app.post('/google', function(req, res) {
 	var query = req.body.query;
-	console.log('\nQuery: ' + query);
+	//console.log('\nQuery: ' + query);
 	// preprocess query
 	/*
 	q = tokenizer.tokenize(req.body.query);
@@ -70,16 +70,16 @@ app.post('/google', function(req, res) {
 	py = childProcess.spawn('python',[script,'--query',query]);
 	var out = '';
 	py.stderr.on('data', function(d) {
-		console.log(d);
+		//console.log(d);
 	});
 	py.stdout.on('data', function(d) {
 		out += d;
 	});
 	py.stdout.on('close', function(d) {
-		console.log(out);
+		//console.log(out);
 	});
 	py.on('close', function (code) {
-		console.log('process exited with status %d', code);
+		//console.log('process exited with status %d', code);
 		var data = JSON.parse(out);
 	    app.render('partials/results.ejs', data, function (err, mkup) {
 	    	res.setHeader('Content-Type', 'application/json');
