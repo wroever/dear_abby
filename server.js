@@ -21,7 +21,7 @@ app.set('view engine', 'ejs');
 
 // initialize database connection
 var client = new elasticsearch.Client({
-	host: 'http://paas:9976e98d4aa969846497a583e29a0651@fili-us-east-1.searchly.com',
+	host: 'http://search-dearabbynu-cn4e6wgrkoo75lnpkia27iryhe.us-west-2.es.amazonaws.com',
 	log: 'trace'
 });
 
@@ -90,18 +90,31 @@ app.post('/google', function(req, res) {
 
 // ElasticSearch database queries
 app.post('/results', function(req, res) {
+	var t = req.body.qtype;
+	var atype;
+	var itype;
+	if (t == 0) {
+		atype = 'da_article';
+		itype = 'dear_abby';
+	} else if (t == 1) {
+		atype = 'ss_article';
+		itype = 'dear_harriette';
+	} else {
+		atype = 'sl_article';
+		itype = 'dan_savage';
+	}
 	client.search({
 	  index: 'articles',
-	  type: 'article',
+	  type: atype,
 	  body: {
 	    query: {
 	      bool: {
 	      	should: [
 	          { match: {
-	                "submission_sw": req.body.query
+	                "submission": req.body.query
 	          }},
 	          { match: {
-	                "response_sw": req.body.query
+	                "response": req.body.query
 	          }}
 	        ]
 		  }
@@ -113,7 +126,7 @@ app.post('/results', function(req, res) {
 		      bool: {
 		      	should: [
 		          { match: {
-		                "submission_sh": req.body.query
+		                "submission": req.body.query
 		          }}
 		        ]
 			  }
@@ -124,7 +137,7 @@ app.post('/results', function(req, res) {
 	}).then(function (resp) {
 		// create payload from the search results to send to client
 	    var hits = resp.hits.hits;
-	    var data = { "hits": [] }
+	    var data = { "hits": [], "img_type": itype }
     	var n = 3; // number of results to include in payload
     	for(i = 0; i < n; i++) {
     		if (!!hits[i]) {
@@ -132,7 +145,10 @@ app.post('/results', function(req, res) {
     		}
     	}
 
-		res.render('partials/results.ejs', data);
+	    app.render('partials/results.ejs', data, function (err, mkup) {
+	    	res.setHeader('Content-Type', 'application/json');
+	    	res.send(JSON.stringify({ html: mkup, hits: data.hits.length }));
+	    });
 
 	    //res.status(200).send(result_html);
 	}, function (err) {

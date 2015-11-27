@@ -21,7 +21,7 @@
 			});
 %>
 		<div class="result-ans clearfix">
-			<img class="response-avatar" src="/img/avatars/<%= e.img_type %>.png" />
+			<img class="response-avatar" src="/img/avatars/<%= e.img_type ? e.img_type : img_type %>.png" />
 			<div class="response-text">
 <%
 			r.forEach(function (q) {
