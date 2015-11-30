@@ -1,3 +1,5 @@
+var q;
+
 $(document).ready(function () {
 	var querying = false;
 	function htmlDecode(input){
@@ -32,6 +34,7 @@ $(document).ready(function () {
 			$currentQ.find('.results-loading').addClass('hide');
         });
 	}
+	q = submitSearchQuery;
 	$("#query").keypress(function(e) {
 		if(e.which == 13) {
 			e.preventDefault();
