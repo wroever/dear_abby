@@ -107,7 +107,7 @@ app.post('/results', function(req, res) {
 	  index: 'articles',
 	  type: atype,
 	  body: {
-	  	min_score: 0.6,
+	  	min_score: 0.5,
 	    query: {
 	      bool: {
 	      	should: [
