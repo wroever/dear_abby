@@ -76,7 +76,7 @@ p {
   overflow: hidden;
   zoom: 1;
   padding-left: 15px; 
-  border-left: 1px solid #ccc;
+  border-left: 3px solid #ccc;
   min-height: 70px;
 }
 
