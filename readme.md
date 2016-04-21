@@ -1,5 +1,3 @@
-10/5/15
-
 ## How to run: ##
 >npm start -or- node server.js
 
