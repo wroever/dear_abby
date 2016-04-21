@@ -1,5 +1,6 @@
 10/5/15
 
 ## How to run: ##
->1) Run "npm start" or "node server.js".
->2) Launch a browser, navigate to localhost:5000
+>npm start -or- node server.js
+
+Runs on port 5000 by default.
